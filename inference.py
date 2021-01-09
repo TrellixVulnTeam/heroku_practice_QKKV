@@ -24,7 +24,7 @@ def make_pred(params):
 def main():
     # return render_template('main.html', single_pred=session['single_pred'],
     #                        multiple_pred=session['multiple_pred'])
-    return 'server'
+    return 'serverrrr'
 
 @app.route('/predict_single', methods=['GET'])
 def predict_single():
