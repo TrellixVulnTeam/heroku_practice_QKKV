@@ -48,7 +48,7 @@ def predict_single():
 @app.route('/predict_multiple', methods=['POST'])
 def predict_multiple():
     my_json = request.get_json()
-    my_json = json.loads(str(my_json))
+    my_json = json.loads(my_json)
     for i in my_json:
         Weight = i[0]['Weight (inc. batteries)']
         Zoom_wide = i[0]['Zoom wide (W)']
