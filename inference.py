@@ -2,6 +2,7 @@ from flask import Flask, request
 import pickle
 import pandas as pd
 import json
+import os
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -34,6 +35,7 @@ def predict_single():
 
     prediction = make_pred(params_list)
 
+
     return 'Prediction- ' + str(prediction[0])
 
 
@@ -62,3 +64,12 @@ def predict_multiple():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    port = os.environ.get('PORT')
+
+    if port:
+        # 'PORT' variable exists - running on Heroku, listen on external IP and on given by Heroku port
+        app.run(host='0.0.0.0', port=int(port))
+    else:
+        # 'PORT' variable doesn't exist, running not on Heroku, presumabely running locally, run with default
+        #   values for Flask (listening only on localhost on default Flask port)
+        app.run()
