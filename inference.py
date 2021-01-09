@@ -19,6 +19,9 @@ def make_pred(params):
     prediction = MODEL.predict(df)
     return prediction
 
+@app.route('/', methods=['GET'])
+def main():
+    return "hi"
 
 @app.route('/predict_single', methods=['GET'])
 def predict_single():
