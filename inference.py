@@ -20,7 +20,7 @@ def make_pred(params):
     return prediction
 
 
-@app.route('/predict_single', methods=['GET', 'POST'])
+@app.route('/predict_single', methods=['GET'])
 def predict_single():
     Effective_pixels = request.args.get('Effective pixels', default=0)
     Max_resolution = request.args.get('Max resolution', default=0)
@@ -39,7 +39,7 @@ def predict_single():
     return 'Prediction- ' + str(prediction[0])
 
 
-@app.route('/predict_multiple', methods=['GET', 'POST'])
+@app.route('/predict_multiple', methods=['POST'])
 def predict_multiple():
     my_json = request.get_json()
     print(type(my_json))
@@ -65,11 +65,4 @@ def predict_multiple():
 if __name__ == '__main__':
     app.run(debug=True)
     port = os.environ.get('PORT')
-
-    if port:
-        # 'PORT' variable exists - running on Heroku, listen on external IP and on given by Heroku port
-        app.run(host='0.0.0.0', port=int(port))
-    else:
-        # 'PORT' variable doesn't exist, running not on Heroku, presumabely running locally, run with default
-        #   values for Flask (listening only on localhost on default Flask port)
-        app.run()
+    app.run(host='0.0.0.0', port=int(port))
