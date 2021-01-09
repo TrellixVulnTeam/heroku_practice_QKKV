@@ -10,14 +10,14 @@ app.secret_key = 'secret'
 INDEX = ['Weight', 'Zoom_wide', 'Low_resolution', 'Zoom_tele',
      'Dimensions', 'Max_resolution', 'Effective_pixels']
 
-# with open('d://downloads//reg.pickle', 'rb') as f:
-#     MODEL = pickle.load(f)
+with open('reg.pickle', 'rb') as f:
+    MODEL = pickle.load(f)
 
 
-# def make_pred(params):
-#     df = pd.DataFrame(params, index=INDEX).T
-#     prediction = MODEL.predict(df)
-#     return prediction
+def make_pred(params):
+    df = pd.DataFrame(params, index=INDEX).T
+    prediction = MODEL.predict(df)
+    return prediction
 
 @app.route('/', methods=['GET'])
 def main():
