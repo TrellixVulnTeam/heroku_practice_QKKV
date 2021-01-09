@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, session, render_template
 import pickle
 import pandas as pd
 import json
@@ -19,9 +19,12 @@ def make_pred(params):
     prediction = MODEL.predict(df)
     return prediction
 
+
 @app.route('/', methods=['GET'])
 def main():
-    return "Inference server!"
+    return render_template('main.html', single_pred=session['single_pred'],
+                           multiple_pred=session['multiple_pred'])
+
 
 @app.route('/predict_single', methods=['GET'])
 def predict_single():
@@ -38,7 +41,7 @@ def predict_single():
 
     prediction = make_pred(params_list)
 
-    print(f'Prediction- {str(prediction[0])}')
+    session['single_pred'] = str(prediction[0])
     return str(prediction[0])
 
 
@@ -61,7 +64,7 @@ def predict_multiple():
         prediction = make_pred(params_list)
         i[0]['prediction'] = prediction[0]
 
-    print(f' Predictions- {json.dumps(my_json)}')
+    session['multiple_pred'] = json.dumps(my_json.json())
     return json.dumps(my_json)
 
 
