@@ -22,9 +22,9 @@ def make_pred(params):
 
 @app.route('/', methods=['GET'])
 def main():
-    return render_template('main.html', single_pred=session['single_pred'],
-                           multiple_pred=session['multiple_pred'])
-
+    # return render_template('main.html', single_pred=session['single_pred'],
+    #                        multiple_pred=session['multiple_pred'])
+    return 'server'
 
 @app.route('/predict_single', methods=['GET'])
 def predict_single():
