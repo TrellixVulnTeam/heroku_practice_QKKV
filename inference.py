@@ -21,7 +21,7 @@ def make_pred(params):
 
 @app.route('/', methods=['GET'])
 def main():
-    return "hi"
+    return "Inference server!"
 
 @app.route('/predict_single', methods=['GET'])
 def predict_single():
@@ -38,14 +38,13 @@ def predict_single():
 
     prediction = make_pred(params_list)
 
-
-    return 'Prediction- ' + str(prediction[0])
+    print(f'Prediction- {str(prediction[0])}')
+    return str(prediction[0])
 
 
 @app.route('/predict_multiple', methods=['POST'])
 def predict_multiple():
     my_json = request.get_json()
-    print(type(my_json))
     my_json = json.loads(str(my_json))
     for i in my_json:
         Weight = i[0]['Weight (inc. batteries)']
@@ -62,6 +61,7 @@ def predict_multiple():
         prediction = make_pred(params_list)
         i[0]['prediction'] = prediction[0]
 
+    print(f' Predictions- {json.dumps(my_json)}')
     return json.dumps(my_json)
 
 
