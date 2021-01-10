@@ -1,9 +1,8 @@
-from flask import Flask, request, session, render_template
+from flask import Flask, request, render_template
 import pickle
 import pandas as pd
 import json
 import os
-import ast
 
 app = Flask(__name__)
 app.secret_key = 'secret'
