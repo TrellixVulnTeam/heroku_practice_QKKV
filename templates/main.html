@@ -2,14 +2,105 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Camera predictor</title>
+    <title>Camera predictor!</title>
+    <style>
+        .type{
+        width:33%;
+        background-color:#99ffcc;
+        border:1px solid black;
+        border-radius:30px;
+        padding:15px;
+        text-align:center;
+        margin:auto;
+        font-size:25px;
+        }
+
+         span{
+        text-decoration:underline;
+        }
+
+        .sec-title{
+        width:15%;
+        font-size:20px;
+        background-color:#ccffe6;
+        border:1px solid black;
+        border-radius:30px;
+        padding:3.5px;
+        text-align:center;
+        text-decoration:underline;
+        margin:auto;
+        }
+
+        p{
+        width:35%;
+        background-color:#F0F8FF;
+        border:1px solid black;
+        border-radius:30px;
+        padding:10px;
+        text-align:center;
+        margin:auto;
+        margin-top:7px;
+        margin-bottom:7px;
+        }
+
+        .pred{
+        font-weight:bold;
+        text-decoration:underline;
+        font-size:20px;
+        }
+
+        h1{
+        text-align:center;
+        text-decoration:underline;
+        font-size:60px;
+        }
+
+        body{
+          background-color: #cccccc;
+          }
+
+        .d{
+        border:7px inset grey;
+        border-radius:25px;
+        width:50%;
+        text-align:center;
+        margin:auto;
+        margin-top:20px;
+        margin-bottom:20px;
+        padding:10px;
+        background-color:#f2ccff;
+        }
+
+
+    </style>
 </head>
 <body>
-<h1>Camera predictor!</h1>
-<h3>bla bla</h3>
+<h1>Camera price predictor!</h1>
 
-<h4>Single:</h4>
-<p>{% if single_pred %} {{single_pred}} {% endif %}</p>
+{% if single_pred %}
+<h3 class="type"><span>Prediction requested</span>: Single prediction</h3>
+
+<div class="d">
+<h4 class="sec-title">Parameters:</h4>
+<p>{{params}}</p>
+<h4 class="sec-title">Prediction:</h4>
+<p class="pred">{{single_pred}}</p>
+</div>
+
+
+{% else %}
+<h3 class="type"><span>Prediction requested</span>: Multiple prediction</h3>
+
+{% for p in range(mult_len) %}
+<div class="d">
+<h4 class="sec-title">Parameters:</h4>
+<p>{{params_mult[p][0]}}</p>
+<h4 class="sec-title">Prediction:</h4>
+<p class="pred">{{mult_pred[p]}}</p>
+</div>
+
+{% endfor %}
+{% endif %}
 
 </body>
 </html>

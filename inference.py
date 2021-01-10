@@ -3,6 +3,7 @@ import pickle
 import pandas as pd
 import json
 import os
+import ast
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -22,9 +23,22 @@ def make_pred(params):
 
 @app.route('/', methods=['GET'])
 def main():
-    # return render_template('main.html', single_pred=session['single_pred'],
-    #                        multiple_pred=session['multiple_pred'])
-    return 'serverrrr'
+    single = request.args.get('single_pred', default=0)
+    multiple = request.args.get('mult_pred', default=0)
+    if multiple != 0:
+        multiple = eval(multiple)
+        mult_len = len(multiple)
+    else:
+        mult_len = 0
+
+    params = request.args.get('params', default=0)
+    par_mult = request.args.get('params_mult', default=0)
+    if par_mult != 0:
+        par_mult = eval(par_mult)
+
+    return render_template('main.html', single_pred=single, params=params,
+                           mult_pred=multiple, params_mult=par_mult, mult_len=mult_len)
+
 
 @app.route('/predict_single', methods=['GET'])
 def predict_single():
@@ -41,7 +55,6 @@ def predict_single():
 
     prediction = make_pred(params_list)
 
-    session['single_pred'] = str(prediction[0])
     return str(prediction[0])
 
 
@@ -64,8 +77,8 @@ def predict_multiple():
         prediction = make_pred(params_list)
         i[0]['prediction'] = prediction[0]
 
-    session['multiple_pred'] = json.dumps(my_json.json())
-    return json.dumps(my_json)
+    json_data = json.dumps(my_json)
+    return json_data
 
 
 if __name__ == '__main__':
