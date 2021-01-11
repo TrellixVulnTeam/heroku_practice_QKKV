@@ -1,8 +1,9 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template
 import pickle
 import pandas as pd
 import json
 import os
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -18,6 +19,33 @@ def make_pred(params):
     df = pd.DataFrame(params, index=INDEX).T
     prediction = MODEL.predict(df)
     return prediction
+
+
+@app.route('/ui', methods=['GET', 'POST'])
+def ui():
+    if request.method == 'POST':
+        weight = request.form["weight"]
+        zoom_w = request.form["zoom_w"]
+        low_res = request.form["low_res"]
+        pixals = request.form["pixals"]
+        zoom_t = request.form["zoom_t"]
+        max_r = request.form["max_r"]
+        dimensions = request.form["dimensions"]
+
+        params = {'Weight (inc. batteries)':weight, 'Zoom wide (W)':zoom_w,
+                'Low resolution':low_res, 'Max resolution':max_r, 'Effective pixels':pixals,
+                'Dimensions':dimensions, 'Zoom tele (T)':zoom_t}
+
+        pred = predict_single(params=params)
+        return render_template('main.html', pred=pred)
+
+    return render_template('form.html')
+
+
+@app.route('/form', methods=['GET'])
+def form():
+    return render_template('form.html')
+
 
 
 @app.route('/', methods=['GET'])
@@ -40,14 +68,23 @@ def main():
 
 
 @app.route('/predict_single', methods=['GET'])
-def predict_single():
-    Effective_pixels = request.args.get('Effective pixels', default=0)
-    Max_resolution = request.args.get('Max resolution', default=0)
-    Dimensions = request.args.get('Dimensions', default=0)
-    Zoom_tele = request.args.get('Zoom tele (T)', default=0)
-    Low_resolution = request.args.get('Low resolution', default=0)
-    Zoom_wide = request.args.get('Zoom wide (W)', default=0)
-    Weight = request.args.get('Weight (inc. batteries)', default=0)
+def predict_single(params=None):
+    if params:
+        Effective_pixels = params['Effective pixels']
+        Max_resolution = params['Max resolution']
+        Dimensions = params['Dimensions']
+        Zoom_tele = params['Zoom tele (T)']
+        Low_resolution = params['Low resolution']
+        Zoom_wide = params['Zoom wide (W)']
+        Weight = params['Weight (inc. batteries)']
+    else:
+        Effective_pixels = request.args.get('Effective pixels', default=0)
+        Max_resolution = request.args.get('Max resolution', default=0)
+        Dimensions = request.args.get('Dimensions', default=0)
+        Zoom_tele = request.args.get('Zoom tele (T)', default=0)
+        Low_resolution = request.args.get('Low resolution', default=0)
+        Zoom_wide = request.args.get('Zoom wide (W)', default=0)
+        Weight = request.args.get('Weight (inc. batteries)', default=0)
 
     params_list = list([Weight, Zoom_wide, Low_resolution, Zoom_tele,
                         Dimensions, Max_resolution, Effective_pixels])
