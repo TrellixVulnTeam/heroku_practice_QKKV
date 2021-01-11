@@ -3,7 +3,6 @@ import pickle
 import pandas as pd
 import json
 import os
-import requests
 
 app = Flask(__name__)
 app.secret_key = 'secret'
@@ -45,7 +44,6 @@ def ui():
 @app.route('/form', methods=['GET'])
 def form():
     return render_template('form.html')
-
 
 
 @app.route('/', methods=['GET'])

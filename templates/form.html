@@ -37,6 +37,10 @@
         background-color:#cccccc;
 
         }
+
+        #sub:hover{
+        background-color:grey;
+        }
     </style>
 </head>
 <body>
@@ -45,22 +49,22 @@
 <div>
 <form action = '/ui' method="POST">
     <p class="p">Weight:</p>
-        <p><input type="number" name="weight" value=0 /></p>
+        <p><input type="number" name="weight" value=0 step="0.001" /></p>
     <p class="p">Zoom wide:</p>
-        <p><input type="number" name="zoom_w" value=0 /></p>
+        <p><input type="number" name="zoom_w" value=0 step="0.001" /></p>
     <p class="p">Low resolution:</p>
-        <p><input type="number" name="low_res" value=0 /></p>
+        <p><input type="number" name="low_res" value=0 step="0.001" /></p>
     <p class="p">Zoom tele:</p>
-        <p><input type="number" name="zoom_t" value=0 /></p>
+        <p><input type="number" name="zoom_t" value=0 step="0.001" /></p>
     <p class="p">Dimensions:</p>
-        <p><input type="number" name="dimensions" value=0 /></p>
+        <p><input type="number" name="dimensions" step="0.001" value=0 /></p>
     <p class="p">Max resolution:</p>
-        <p><input type="number" name="max_r" value=0 /></p>
+        <p><input type="number" name="max_r" step="0.001" value=0 /></p>
     <p class="p">Effective pixals:</p>
-        <p><input type="number" name="pixals" value=0 /></p>
+        <p><input type="number" name="pixals" step="0.001" value=0 /></p>
 
 
-    <p><input type="submit" value="Submit!" /></p>
+    <p><input type="submit" value="Submit!" id="sub"/></p>
 
 </form>
 </div>
